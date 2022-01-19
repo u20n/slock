@@ -1,5 +1,5 @@
 # slock
-discord/minecraft integration for session-based smp(s)
+discord & minecraft integration for session-based smp(s)
 
 ### Use
 slock updates the server's whitelist to effectively "lock" the server during off hours. It enables voting through discord to start sessions of a predetermined length.
