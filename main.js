@@ -31,7 +31,7 @@ function _wipe(l) {
 /** copy file */
 function _copy(o, d) {
   fs.copyFile(o, d, (e)=>{
-    if (e) throw err;
+    if (e) throw e;
   });
 }
 
@@ -47,12 +47,16 @@ function reload() {
 
 /** toggle open */
 function toggle(status) {
-  var l = pull("cfg/config.json")["path"];
+  var c = pull("cfg/config.json");
+  var l = c["path"];
   if (status) {
     /** rename on-whitelist */
     _copy("./whitelists/open.json", l+"whitelist.json");
     /** schedule off */
-
+    let t = cron.schedule(' * */'+c["session_time"]+' * * *', (t) => {
+      _copy("./whitelists/close.json", l+"whitelist.json");
+      t.destroy();
+    });
   } else {
     /** rename off-whitelist */
     _copy("./whitelists/close.json", l+"whitelist.json");
